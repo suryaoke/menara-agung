@@ -17,29 +17,37 @@
                     <form action="{{ route('admin.supplier.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-md-12">
-                                <x-input-file-block name="image" />
+
+                            <div class="row ">
+                                <div class="col-md">
+                                    <x-input-file-block name="image" />
+                                </div>
+                                <div class="col-md">
+                                    <x-input-block name="shopname" placeholder="Enter shopname" />
+                                </div>
+
                             </div>
 
-                            <div class="col-md-12">
-                                <x-input-block name="shopname" placeholder="Enter shopname" />
+                            <div class="row ">
+                                <div class="col-md">
+                                    <x-input-block name="name" placeholder="Enter supplier name" />
+                                </div>
+                                <div class="col-md">
+                                    <x-input-email name="email" placeholder="Enter supplier email" />
+                                </div>
+
                             </div>
 
-                            <div class="col-md-12">
-                                <x-input-block name="name" placeholder="Enter supplier name" />
+                            <div class="row ">
+                                <div class="col-md">
+                                    <x-input-number name="phone" placeholder="Enter supplier phone" />
+                                </div>
+                                <div class="col-md">
+                                    <x-input-text name="address" placeholder="Enter supplier address" />
+                                </div>
+
                             </div>
 
-                            <div class="col-md-12">
-                                <x-input-email name="email" placeholder="Enter supplier email" />
-                            </div>
-
-                            <div class="col-md-12">
-                                <x-input-number name="phone" placeholder="Enter supplier phone" />
-                            </div>
-
-                            <div class="col-md-12">
-                                <x-input-text name="address" placeholder="Enter supplier address" />
-                            </div>
 
 
                         </div>

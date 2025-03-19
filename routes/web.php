@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileAdminControllerr;
 use App\Http\Controllers\Admin\SupplierController;
 use Illuminate\Support\Facades\Log;
@@ -58,6 +59,11 @@ Route::group(
         // route category //
 
         Route::resource('category', CategoryController::class);
+
+
+        // route product //
+
+        Route::resource('product', ProductController::class);
     }
 );
 

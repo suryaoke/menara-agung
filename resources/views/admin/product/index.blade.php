@@ -5,9 +5,9 @@
         <div class="container-xl">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">All Suppliers</h3>
+                    <h3 class="card-title">All Products</h3>
                     <div class="card-actions">
-                        <a href="{{ route('admin.supplier.create') }}" class="btn btn-primary">
+                        <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
                             <i class="ti ti-plus"></i>
                             Add new
                         </a>
@@ -20,35 +20,42 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Image</th>
-                                    <th>Shopname</th>
                                     <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Address</th>
+                                    <th>Category</th>
+                                    <th>Product</th>
+                                    <th>Code</th>
+                                    <th>Tanggal</th>
+                                    <th>Jual</th>
+                                    <th>Beli</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($suppliers as  $supplier)
+                                @forelse ($products as  $product)
                                     <tr>
-                                        <td>{{ ($suppliers->currentPage() - 1) * $suppliers->perPage() + $loop->iteration }}
+                                        <td>{{ ($products->currentPage() - 1) * $products->perPage() + $loop->iteration }}
                                         </td>
-                                        <td><img src="{{ asset($supplier->image) }}" alt=""
+                                        <td><img src="{{ asset($product->image) }}" alt=""
                                                 style="width: 50px; height:40px"></td>
-                                        <td>{{ $supplier->shopname }}</td>
-                                        <td>{{ $supplier->name }}</td>
-                                        <td>{{ $supplier->email }}</td>
-                                        <td>{{ $supplier->phone }}</td>
-                                        <td> {{ \Illuminate\Support\Str::words($supplier->address, 2, '...') }}</td>
+                                        <td>{{ $product->name }}</td>
+                                        <td>{{ $product->category_id }}</td>
+                                        <td>{{ $product->supplier_id }}</td>
+                                        <td>{{ $product->product_code }}</td>
+                                        <td>{{ $product->tanggal_beli }}</td>
+
+                                        <td> {{ number_format($product['harga_beli'], 0, ',', '.') }}</td>
+
+                                        <td> {{ number_format($product['harga_jual'], 0, ',', '.') }}</td>
+
 
                                         <td>
 
-                                            <a href="{{ route('admin.supplier.edit', $supplier->id) }}"
+                                            <a href="{{ route('admin.product.edit', $product->id) }}"
                                                 class="btn-sm btn-primary">
                                                 <i class="ti ti-edit"></i>
                                             </a>
 
-                                            <a href="{{ route('admin.supplier.destroy', $supplier->id) }}"
+                                            <a href="{{ route('admin.product.destroy', $product->id) }}"
                                                 class="text-red delete-item">
                                                 <i class="ti ti-trash-x"></i>
                                             </a>
@@ -56,14 +63,14 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="8" class="text-center">No Data Found!</td>
+                                        <td colspan="10" class="text-center">No Data Found!</td>
                                     </tr>
                                 @endforelse
                             </tbody>
                         </table>
                     </div>
                     <div class="mt-4">
-                        {{ $suppliers->links() }}
+                        {{ $products->links() }}
                     </div>
                 </div>
 

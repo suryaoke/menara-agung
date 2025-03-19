@@ -21,36 +21,30 @@
                         <div class="row">
                             <x-image-preview src="{{ asset($supplier->image) }}" />
 
-                            <div class="row ">
-                                <div class="col-md">
-                                    <x-input-file-block name="image" />
-                                </div>
-                                <div class="col-md">
-                                    <x-input-block name="shopname" :value="$supplier->shopname"
-                                        placeholder="Enter supplier shopName" />
-                                </div>
-
+                            <div class="col-md-12">
+                                <x-input-file-block name="image" />
                             </div>
 
-                            <div class="row ">
-                                <div class="col-md">
-                                    <x-input-block name="name" :value="$supplier->name" placeholder="Enter supplier name" />
-                                </div>
-                                <div class="col-md">
-                                    <x-input-email name="email" :value="$supplier->email" placeholder="Enter supplier email" />
-                                </div>
-
+                            <div class="col-md-12">
+                                <x-input-block name="shopname" :value="$supplier->shopname" placeholder="Enter supplier shopName" />
                             </div>
 
-                            <div class="row ">
-                                <div class="col-md">
-                                    <x-input-number name="phone" :value="$supplier->phone" placeholder="Enter supplier phone" />
-                                </div>
-                                <div class="col-md">
-                                    <x-input-text name="address" :value="$supplier->address" placeholder="Enter supplier address" />
-                                </div>
-
+                            <div class="col-md-12">
+                                <x-input-block name="name" :value="$supplier->name" placeholder="Enter supplier name" />
                             </div>
+
+                            <div class="col-md-12">
+                                <x-input-email name="email" :value="$supplier->email" placeholder="Enter supplier email" />
+                            </div>
+
+                            <div class="col-md-12">
+                                <x-input-number name="phone" :value="$supplier->phone" placeholder="Enter supplier phone" />
+                            </div>
+
+                            <div class="col-md-12">
+                                <x-input-text name="address" :value="$supplier->address" placeholder="Enter supplier address" />
+                            </div>
+
 
 
                         </div>

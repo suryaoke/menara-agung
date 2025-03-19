@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->integer('supplier_id');
-            $table->integer('unit_id');
-            $table->integer('category_id');
-            $table->string('name')->nullable();
-            $table->double('quantity')->default('0');
-            $table->tinyInteger('status')->default('1');
-            $table->integer('created_by')->nullable();
-            $table->integer('updated_by')->nullable();
+            $table->string('name');
+            $table->foreignId('supplier_id')->constrained('suppliers');
+            $table->foreignId('category_id')->constrained('categories');
+            $table->string('product_code');
+            $table->string('image');
+            $table->date('tanggal_beli');
+            $table->bigInteger('harga_beli');
+            $table->bigInteger('harga_jual');
             $table->timestamps();
         });
     }
