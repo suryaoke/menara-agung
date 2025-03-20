@@ -32,7 +32,7 @@ class SupplierUpdateRequest extends FormRequest
             'phone' => ['required'],
             'address' => ['required', 'string', 'max:200',],
             'shopname' => ['required', 'string', 'max:200',],
-            'image' => ['required', 'image', 'max:3000'],
+            'image' => ['image', 'max:3000'],
 
         ];
     }

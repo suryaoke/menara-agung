@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('tanggal_beli');
             $table->bigInteger('harga_beli');
             $table->bigInteger('harga_jual');
+            $table->bigInteger('product_store');
             $table->timestamps();
         });
     }

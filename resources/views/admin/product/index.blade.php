@@ -7,6 +7,14 @@
                 <div class="card-header">
                     <h3 class="card-title">All Products</h3>
                     <div class="card-actions">
+                        <a href="{{ route('admin.import.product') }}" class="btn btn-warning">
+
+                            Import
+                        </a>
+                        <a href="{{ route('admin.export.product') }}" class="btn btn-success">
+
+                            Export
+                        </a>
                         <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
                             <i class="ti ti-plus"></i>
                             Add new
@@ -27,6 +35,7 @@
                                     <th>Tanggal</th>
                                     <th>Jual</th>
                                     <th>Beli</th>
+                                    <th>Stok</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -38,15 +47,15 @@
                                         <td><img src="{{ asset($product->image) }}" alt=""
                                                 style="width: 50px; height:40px"></td>
                                         <td>{{ $product->name }}</td>
-                                        <td>{{ $product->category_id }}</td>
-                                        <td>{{ $product->supplier_id }}</td>
+                                        <td>{{ $product['category']['name'] }}</td>
+                                        <td>{{ $product['supplier']['name'] }}</td>
                                         <td>{{ $product->product_code }}</td>
                                         <td>{{ $product->tanggal_beli }}</td>
 
                                         <td> {{ number_format($product['harga_beli'], 0, ',', '.') }}</td>
 
                                         <td> {{ number_format($product['harga_jual'], 0, ',', '.') }}</td>
-
+                                        <td> {{ $product->product_store }} </td>
 
                                         <td>
 
@@ -59,6 +68,11 @@
                                                 class="text-red delete-item">
                                                 <i class="ti ti-trash-x"></i>
                                             </a>
+                                            <a href="{{ route('admin.barcode.product', $product->id) }}"
+                                                class="text-green ">
+                                                <i class="ti ti-barcode"></i>
+                                            </a>
+
                                         </td>
                                     </tr>
                                 @empty

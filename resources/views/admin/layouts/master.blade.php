@@ -21,6 +21,11 @@
     <link href="{{ asset('admin/assets/dist/css/tabler.min.css?1692870487') }}" rel="stylesheet" />
     <link href="{{ asset('admin/assets/dist/css/demo.min.css?1692870487') }}" rel="stylesheet" />
 
+
+    <link href="{{ asset('admin/assets/dist/css/tabler-flags.min.css?1692870487') }}" rel="stylesheet" />
+    <link href="{{ asset('admin/assets/dist/css/tabler-payments.min.css?1692870487') }}" rel="stylesheet" />
+    <link href="{{ asset('admin/assets/dist/css/tabler-vendors.min.css?1692870487') }}" rel="stylesheet" />
+
     <style>
         @import url('https://rsms.me/inter/inter.css');
 
@@ -34,7 +39,7 @@
     </style>
     @stack('styles')
 
-    @vite(['resources/css/admin.css', 'resources/js/admin.js','resources/js/login.js'])
+    @vite(['resources/css/admin.css', 'resources/js/admin.js', 'resources/js/login.js'])
     @stack('header_scripts')
 </head>
 
@@ -123,7 +128,8 @@
                         <path d="M12 17h.01" />
                     </svg>
                     <h3>Are you sure?</h3>
-                    <div class="text-secondary">Do you want to delete your database? This action cannot be undone.</div>
+                    <div class="text-secondary">Do you want to delete your database? This action cannot be undone.
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div class="w-100">
@@ -153,12 +159,14 @@
     <!-- Filemanager JS -->
     <script src="/vendor/laravel-filemanager/js/stand-alone-button.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
-    <script src="{{ asset('frontend/assets/js/jquery-ui.min.js') }}" defer></script>
+    <script src="{{ asset('admin/assets/js/jquery-ui.min.js') }}" defer></script>
 
 
     <!-- Tabler Core -->
     <script src="{{ asset('admin/assets/dist/js/tabler.min.js?1692870487') }}" defer></script>
     <script src="{{ asset('admin/assets/dist/js/demo.min.js?1692870487') }}" defer></script>
+
+
 
     @stack('scripts')
 

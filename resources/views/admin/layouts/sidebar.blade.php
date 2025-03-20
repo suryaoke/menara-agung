@@ -232,7 +232,7 @@
                  </li>
 
                  <li class="nav-item">
-                     <a class="nav-link" href="{{ route('admin.supplier.index') }}">
+                     <a class="nav-link" href="{{ route('admin.pos') }}">
                          <span
                              class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -255,6 +255,29 @@
                      </a>
                  </li>
 
+
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ route('admin.store.index') }}">
+                         <span
+                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
+                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                 stroke-linecap="round" stroke-linejoin="round"
+                                 class="icon icon-tabler icons-tabler-outline icon-tabler-building-store">
+                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                 <path d="M3 21l18 0" />
+                                 <path
+                                     d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4" />
+                                 <path d="M5 21l0 -10.15" />
+                                 <path d="M19 21l0 -10.15" />
+                                 <path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4" />
+                             </svg>
+                         </span>
+                         <span class="nav-link-title">
+                             Store
+                         </span>
+                     </a>
+                 </li>
 
 
 
@@ -329,7 +352,7 @@
                  <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
                          data-bs-auto-close="false" role="button"
-                         aria-expanded="{{ Request::routeIs('admin.product.*') ? 'true' : 'false' }}">
+                         aria-expanded="{{ Request::routeIs('admin.product.*', 'admin.import.product') ? 'true' : 'false' }}">
                          <span class="nav-link-icon d-md-none d-lg-inline-block">
                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -342,28 +365,26 @@
                              </svg>
                          </span>
                          <span class="nav-link-title">
-                             Product </span>
+                             Product
+                         </span>
                      </a>
-                     <div class="dropdown-menu {{ Request::routeIs('admin.product.*') ? 'show' : '' }}">
+                     <div
+                         class="dropdown-menu {{ Request::routeIs('admin.product.*', 'admin.import.product') ? 'show' : '' }}">
                          <a class="dropdown-item" href="{{ route('admin.product.index') }}" rel="noopener">
                              All Product
                          </a>
-
-                         <a class="dropdown-item" href="{{ route('admin.product.index') }}" rel="noopener">
+                         <a class="dropdown-item" href="{{ route('admin.import.product') }}" rel="noopener">
                              Import Product
                          </a>
-
-
                      </div>
                  </li>
 
 
-
                  <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
-                         data-bs-auto-close="false" role="button" aria-expanded="false">
-                         <span
-                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                         data-bs-auto-close="false" role="button"
+                         aria-expanded="{{ Request::routeIs('admin.pending.order', 'admin.complete.order') ? 'true' : 'false' }}">
+                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round"
@@ -379,26 +400,24 @@
                              Orders
                          </span>
                      </a>
-                     <div class="dropdown-menu">
-                         <a class="dropdown-item" href="https://tabler.io/docs" target="_blank" rel="noopener">
+                     <div
+                         class="dropdown-menu {{ Request::routeIs('admin.pending.order', 'admin.complete.order') ? 'show' : '' }}">
+                         <a class="dropdown-item" href="{{ route('admin.pending.order') }}" rel="noopener">
                              Pending Order
                          </a>
-                         <a class="dropdown-item" href="./changelog.html">
+                         <a class="dropdown-item" href="{{ route('admin.complete.order') }}" rel="noopener">
                              Complete Order
-                         </a>
-                         <a class="dropdown-item" href="https://github.com/tabler/tabler" target="_blank"
-                             rel="noopener">
-                             Pending Due
                          </a>
 
                      </div>
                  </li>
 
+
                  <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#navbar-help" data-bs-toggle="dropdown"
-                         data-bs-auto-close="false" role="button" aria-expanded="false">
-                         <span
-                             class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/lifebuoy -->
+                         data-bs-auto-close="false" role="button"
+                         aria-expanded="{{ Request::routeIs('admin.stock') ? 'true' : 'false' }}">
+                         <span class="nav-link-icon d-md-none d-lg-inline-block">
                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                  stroke-linecap="round" stroke-linejoin="round"
@@ -410,17 +429,15 @@
                              </svg>
                          </span>
                          <span class="nav-link-title">
-                             Stock
-                         </span>
+                             Stock </span>
                      </a>
-                     <div class="dropdown-menu">
-                         <a class="dropdown-item" href="https://tabler.io/docs" target="_blank" rel="noopener">
+                     <div class="dropdown-menu {{ Request::routeIs('admin.stock') ? 'show' : '' }}">
+                         <a class="dropdown-item" href="{{ route('admin.stock') }}" rel="noopener">
                              Stock
                          </a>
-
-
                      </div>
                  </li>
+
 
 
 

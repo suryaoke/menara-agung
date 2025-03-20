@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Product extends Model
 {
     //
@@ -17,5 +18,17 @@ class Product extends Model
         'tanggal_beli',
         'harga_beli',
         'harga_jual',
+        'product_store'
     ];
+
+
+    function supplier()
+    {
+        return $this->belongsTo(Supplier::class, 'supplier_id', 'id');
+    }
+
+    function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id', 'id');
+    }
 }

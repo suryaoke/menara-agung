@@ -72,7 +72,7 @@
                                                 <path d="M12 15v3" />
                                             </svg>
                                         </span>
-                                        <input class="form-control" placeholder="Select a date" id="datepicker-icon-prepend"
+                                        <input class="form-control" placeholder="Select a date" type="date"
                                             name="tanggal_beli" value="{{ \Carbon\Carbon::now()->toDateString() }}" />
 
                                     </div>
@@ -89,6 +89,14 @@
                                     <x-input-number name="harga_jual" placeholder="Enter product harga jual" />
                                 </div>
 
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-md">
+                                    <x-input-number name="product_store" placeholder="Enter product store" />
+                                </div>
+
+                                <div class="col-md"> </div>
                             </div>
 
 

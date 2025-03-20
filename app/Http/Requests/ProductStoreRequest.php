@@ -29,6 +29,7 @@ class ProductStoreRequest extends FormRequest
             'tanggal_beli' => ['required'],
             'harga_beli' => ['required'],
             'harga_jual' => ['required'],
+            'product_store' => ['required'],
             'image' => ['required', 'image', 'max:3000'],
 
         ];

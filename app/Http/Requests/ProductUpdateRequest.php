@@ -11,7 +11,7 @@ class ProductUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,20 @@ class ProductUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:200',
+                'unique:products,name,' . $this->product->id
+            ],
+            'supplier_id' => ['required'],
+            'category_id' => ['required'],
+            'product_code' => ['required'],
+            'tanggal_beli' => ['required'],
+            'harga_beli' => ['required'],
+            'harga_jual' => ['required'],
+            'product_store' => ['required'],
+            'image' => ['image', 'max:3000'],
         ];
     }
 }
