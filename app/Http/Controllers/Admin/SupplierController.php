@@ -18,9 +18,18 @@ class SupplierController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $suppliers = Supplier::orderBy('name', 'asc')->paginate(10);
+
+        $searchName = $request->input('searchname');
+
+        $query = Supplier::query();
+        if (!empty($searchName)) {
+            $query->where('name', 'LIKE', '%' . $searchName . '%');
+        }
+
+
+        $suppliers =  $query->orderBy('name', 'asc')->paginate(10);
         return view('admin.supplier.index', compact('suppliers'));
     }
 

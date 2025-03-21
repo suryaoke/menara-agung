@@ -121,6 +121,7 @@ Route::group(
             Route::get('/stok', 'index')->name('stock');
             Route::post('/stok/add', 'AddStok')->name('add.stok');
             Route::get('/stok/detail/{id}', 'detail')->name('detail.stok');
+            Route::get('/stok/export', 'ExportStok')->name('export.stok');
         });
     }
 );

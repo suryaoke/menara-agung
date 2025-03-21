@@ -117,6 +117,24 @@
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">
+                            <form role="form" action="{{ route('admin.pos') }}" method="get" class="sm:flex">
+                                <div class="row ">
+
+                                    <div class="col-md">
+                                        <div class="form-group">
+                                            <input type="text" name="searchname" valu="{{ request('searchname') }}"
+                                                placeholder="Search Name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md">
+                                        {{--  <button type="submit" class="btn btn-primary">Search</button>  --}}
+                                        <a href="{{ route('admin.pos') }}" class="btn btn-danger">Clear</a>
+
+                                    </div>
+
+                                </div>
+                            </form>
+
                             <div class="table-responsive">
                                 <table class="table table-vcenter card-table">
                                     <thead>

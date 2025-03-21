@@ -18,8 +18,7 @@ class Order extends Model
         'payment_status',
         'pay',
         'due',
+        'change'
 
     ];
-
-
 }

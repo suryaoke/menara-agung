@@ -6,11 +6,35 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">All Products</h3>
+                    <form role="form" action="{{ route('admin.product.index') }}" method="get">
+                        <div class="row ">
+
+                            <div class="col-md">
+                                <div class="form-group">
+                                    <input type="text" name="searchname" valu="{{ request('searchname') }}"
+                                        placeholder="Search Name" class="form-control">
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-md">
+                                {{--  <button type="submit" class="btn btn-primary">Search</button>  --}}
+                                <a href="{{ route('admin.product.index') }}" class="btn btn-danger">Clear</a>
+
+                            </div>
+
+                        </div>
+
+                    </form>
                     <div class="card-actions">
+
+
                         <a href="{{ route('admin.import.product') }}" class="btn btn-warning">
 
                             Import
                         </a>
+
                         <a href="{{ route('admin.export.product') }}" class="btn btn-success">
 
                             Export
@@ -19,6 +43,9 @@
                             <i class="ti ti-plus"></i>
                             Add new
                         </a>
+
+
+
                     </div>
                 </div>
                 <div class="card-body">

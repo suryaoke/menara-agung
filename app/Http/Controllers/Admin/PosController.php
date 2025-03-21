@@ -12,9 +12,16 @@ use Illuminate\Http\Request;
 
 class PosController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $products = Product::where('product_store', '>', '0')->paginate(10);
+        $searchName = $request->input('searchname');
+
+        $query = Product::query();
+        if (!empty($searchName)) {
+            $query->where('name', 'LIKE', '%' . $searchName . '%');
+        }
+
+        $products = $query->where('product_store', '>', '0')->paginate(10);
         return view('admin.pos.pos_page', compact('products'));
     }
 
@@ -114,7 +121,14 @@ class PosController extends Controller
         $customer = $request->customer;
         $store = Store::first();
 
-      
+
         return view('admin.invoice.product_invoice', compact('store', 'contents', 'customer'));
     }
+
+    //   if (!empty($searchUsername)) {
+    //         $query->whereHas('users', function ($lecturerQuery) use ($searchUsername) {
+    //             $lecturerQuery->where('username', 'LIKE', '%' . $searchUsername . '%');
+    //         });
+    //     }
+
 }

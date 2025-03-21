@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\StokExport;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Stok;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StockController extends Controller
 {
@@ -42,5 +44,10 @@ class StockController extends Controller
 
         $stoks = Stok::where('product_id', $id)->paginate(10);
         return view('admin.stock.detail', compact('stoks', 'product'));
+    }
+
+    public function ExportStok()
+    {
+        return Excel::download(new StokExport, 'stoks.xlsx');
     }
 }

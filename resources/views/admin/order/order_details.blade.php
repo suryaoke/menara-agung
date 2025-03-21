@@ -42,7 +42,6 @@
 
                     <div class="row">
 
-
                         <div class="col-6">
                             {{--  <span class="avatar avatar-xl"
                                 style="background-image: url({{ $store->image ? asset($store->image) : asset('admin/assets/static/avatars/userprofile.jpg') }})">
@@ -55,13 +54,13 @@
                             </address>
                         </div>
                         <div class="col-6 text-end">
-                            <p class="h3">Client</p>
+                            <p class="h3">Client : {{$orders->customer}} </p>
                             <address>
-                                - <br>
                                 Order Date : {{ $orders->tanggal_order }} <br>
                                 Payment Status : {{ $orders->payment_status }} <br>
                                 Paid Amount :{{ $orders->pay }} <br>
-                                Due Amount :{{ $orders->due }}
+                                Due Amount :{{ $orders->due }} <br>
+                                Change :{{ $orders->change }}
 
                             </address>
                         </div>

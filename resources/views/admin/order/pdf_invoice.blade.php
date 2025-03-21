@@ -125,7 +125,8 @@
                     Order Date : {{ $orders->tanggal_order }} <br>
                     Payment Status : {{ $orders->payment_status }} <br>
                     Paid Amount :{{ $orders->pay }} <br>
-                    Due Amount :{{ $orders->due }}
+                    Due Amount :{{ $orders->due }} <br>
+                    Change :{{ $orders->change }}
 
                 </p>
             </div>

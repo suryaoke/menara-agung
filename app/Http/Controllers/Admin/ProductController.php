@@ -26,9 +26,22 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View
+    public function index(Request $request): View
     {
-        $products = Product::orderBy('name', 'asc')->paginate(10);
+        $searchName = $request->input('searchname');
+        $searchCode = $request->input('searchcode');
+
+        $query = Product::query();
+        if (!empty($searchName)) {
+            $query->where('name', 'LIKE', '%' . $searchName . '%');
+        }
+
+        if (!empty($searchCode)) {
+            $query->where('product_code', 'LIKE', '%' . $searchCode . '%');
+        }
+
+
+        $products = $query->orderBy('name', 'asc')->paginate(10);
         return view('admin.product.index', compact('products'));
     }
 

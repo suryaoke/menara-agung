@@ -113,16 +113,13 @@
 
 
     <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <form method="POST" action="{{ route('admin.final.invoice') }}" autocomplete="off" novalidate>
                     @csrf
-                    <div class=" mt-4 mb-2 text-center">
-
+                    <div class="mt-4 mb-2 text-center">
                         <h5 class="modal-title">Invoice {{ $customer }} </h5>
                         <h5 class="modal-title">Total Amount {{ Cart::total() }} </h5>
-
-
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
@@ -130,21 +127,30 @@
 
                             <x-select-block name="payment_status" :value="old('payment_status', 'cash')" :options="['cash' => 'Cash', 'transfer' => 'Transfer']" />
 
-
                             <x-input-error :messages="$errors->get('payment_status')" class="mt-2" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Pay Now</label>
-                            <input type="number" id="payNow" name="pay" value="{{ old('pay') }}"
+                            <input type="number" id="pay-now" name="pay" value="{{ old('pay') }}"
                                 class="form-control" placeholder="Pay Now" autocomplete="off" required>
                             <x-input-error :messages="$errors->get('pay')" class="mt-2" />
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label">Due Amount</label>
-                            <input type="number"  name="due" value="{{ old('due') }}"
+                            <input type="number" id="due-amount" name="due" value="{{ old('due') }}"
                                 class="form-control" placeholder="Due Amount" autocomplete="off" required readonly>
                             <x-input-error :messages="$errors->get('due')" class="mt-2" />
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Change</label>
+                            <input type="number" id="change" name="change" value="{{ old('change') }}"
+                                class="form-control" placeholder="Change" autocomplete="off" required readonly>
+                            <x-input-error :messages="$errors->get('change')" class="mt-2" />
+                        </div>
+
+
 
 
                         <input type="hidden" name="customer" value="{{ $customer }}">
@@ -153,18 +159,13 @@
                         <input type="hidden" name="total_product" value="{{ Cart::count() }}">
                         <input type="hidden" name="sub_total" value="{{ Cart::subtotal() }}">
                         <input type="hidden" name="vat" value="{{ Cart::tax() }}">
-                        <input type="hidden" name="total" value="{{ Cart::total() }}">
-
-
+                        <input type="hidden" name="total" id="total-amount" value="{{ Cart::total() }}">
 
                     </div>
 
                     <div class="modal-footer">
-                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                            Cancel
-                        </a>
+                        <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">Cancel</a>
                         <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-
                             Complete Order
                         </button>
                     </div>
@@ -172,29 +173,30 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Ambil elemen input
+            const payNowInput = document.getElementById('pay-now');
+            const dueAmountInput = document.getElementById('due-amount');
+            const changeInput = document.getElementById('change');
+            const totalAmount = parseFloat(document.getElementById('total-amount').value.replace(/\./g,
+                "")); // Hapus titik pemisah ribuan
 
-    {{--  <script>
-        const payNowInput = document.getElementById('payNow');
-        const dueAmountInput = document.getElementById('dueAmount');
+            // Fungsi untuk menghitung due amount dan change
+            function calculateAmounts() {
+                const payNow = parseFloat(payNowInput.value) || 0; // Nilai default 0 jika kosong
+                const dueAmount = totalAmount - payNow;
+                const change = payNow - totalAmount;
 
+                // Set nilai due amount (jika negatif, set ke 0 karena tidak ada hutang jika lebih bayar)
+                dueAmountInput.value = dueAmount > 0 ? dueAmount.toFixed(0) : 0;
 
-        const cartTotalString = '{{ Cart::total() }}'.replace(/\./g, '').replace(',', '.');
-        const cartTotal = parseFloat(cartTotalString); // Convert the string to a float
+                // Set nilai change (jika positif, artinya ada kembalian; jika tidak, set ke 0)
+                changeInput.value = change > 0 ? change.toFixed(0) : 0;
+            }
 
-        // Function to update Due Amount
-        function updateDueAmount() {
-            let payNow = parseFloat(payNowInput.value) || 0; // Set Pay Now to 0 if empty
-            let dueAmount = Math.floor(cartTotal - payNow); // Calculate Due Amount and round down
-            dueAmountInput.value = dueAmount >= 0 ? dueAmount : 0; // Set Due Amount (no negative values)
-        }
-
-        // Initialize Due Amount when page loads
-        window.addEventListener('DOMContentLoaded', updateDueAmount);
-
-        // Also initialize Due Amount when modal is shown
-        document.getElementById('modal-report').addEventListener('shown.bs.modal', updateDueAmount);
-
-        // Listen for changes in the Pay Now input field
-        payNowInput.addEventListener('input', updateDueAmount);
-    </script>  --}}
+            // Tambahkan event listener untuk perubahan pada input "Pay Now"
+            payNowInput.addEventListener('input', calculateAmounts);
+        });
+    </script>
 @endsection

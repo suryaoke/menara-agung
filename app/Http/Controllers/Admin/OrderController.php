@@ -22,15 +22,6 @@ class OrderController extends Controller
     public function FinalInvoice(Request $request)
     {
 
-        //    $validasi =  $request->validate([
-        //         'payment_status' => 'required',
-        //         'pay' => 'required',
-        //         'due' => 'required',
-
-        //     ]);
-
-
-
         $data = array();
         $data['customer'] = $request->customer;
         $data['tanggal_order'] = $request->tanggal_order;
@@ -45,6 +36,7 @@ class OrderController extends Controller
         $data['payment_status'] = $request->payment_status;
         $data['pay'] = $request->pay;
         $data['due'] = $request->due;
+        $data['change'] = $request->change;
 
         $order_id = Order::insertGetId($data);
         $contents = Cart::content();
@@ -104,7 +96,7 @@ class OrderController extends Controller
             $stok->save();
         }
 
-       
+
         $order->order_status = 'completed';
         $order->save();
 
