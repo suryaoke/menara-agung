@@ -76,6 +76,8 @@ Route::group(
             Route::get('/import/product', 'ImportProduct')->name('import.product');
             Route::get('/export/product', 'ExportProduct')->name('export.product');
             Route::post('/import/file/product', 'ImportFileProduct')->name('import.file.product');
+
+            Route::get('/export/template/product', 'ExportTemplateProduct')->name('export.template.product');
         });
 
 
@@ -103,6 +105,12 @@ Route::group(
             Route::post('/order/status/update', 'OrderStatusUpdate')->name('order.status.update');
 
             Route::get('/complete/order', 'CompleteOrder')->name('complete.order');
+
+
+            Route::get('/invoice/pdf/{order_id}', 'PdfInvoice')->name('order.invoice.pdf');
+
+
+            Route::get('/export/complete-order', 'exportComplete')->name('export.complete.order');
         });
 
 
@@ -110,7 +118,9 @@ Route::group(
 
         Route::controller(StockController::class)->group(function () {
 
-            Route::get('/stock', 'index')->name('stock');
+            Route::get('/stok', 'index')->name('stock');
+            Route::post('/stok/add', 'AddStok')->name('add.stok');
+            Route::get('/stok/detail/{id}', 'detail')->name('detail.stok');
         });
     }
 );

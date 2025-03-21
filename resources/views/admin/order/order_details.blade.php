@@ -44,9 +44,9 @@
 
 
                         <div class="col-6">
-                            <span class="avatar avatar-xl"
+                            {{--  <span class="avatar avatar-xl"
                                 style="background-image: url({{ $store->image ? asset($store->image) : asset('admin/assets/static/avatars/userprofile.jpg') }})">
-                            </span>
+                            </span>  --}}
                             <p class="h3 mt-1"> {{ $store->name }} </p>
                             <address>
                                 {{ $store->address }} <br>
@@ -66,7 +66,7 @@
                             </address>
                         </div>
                         <div class="col-12 mt-2">
-                            <h1>Invoice : {{ $orders->invoice_no }} </h1>
+                            <p class="h3">Invoice : {{ $orders->invoice_no }} </p>
                         </div>
                     </div>
                     <table class="table table-transparent table-responsive">

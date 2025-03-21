@@ -3,25 +3,26 @@
 namespace App\Exports;
 
 use App\Models\Product;
+use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class ProductExport implements FromCollection
+class ProductExport implements FromView
+
 {
+
     /**
-     * @return \Illuminate\Support\Collection
+     * Load data for export to Excel
+     *
+     * @return View
      */
-    public function collection()
+    public function view(): View
     {
-        return Product::select(
-            'name',
-            'supplier_id',
-            'category_id',
-            'product_code',
-            'image',
-            'tanggal_beli',
-            'harga_beli',
-            'harga_jual',
-            'product_store'
-        )->get();
+
+        $products = Product::orderBy('name', 'asc')->get();
+        return view('admin.product.export', [
+            'products' => $products,
+
+        ]);
     }
 }

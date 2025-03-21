@@ -2,21 +2,35 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\OrderCompleteExport;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderDetails;
 use App\Models\Product;
+use App\Models\Stok;
 use App\Models\Store;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class OrderController extends Controller
 {
     public function FinalInvoice(Request $request)
     {
+
+        //    $validasi =  $request->validate([
+        //         'payment_status' => 'required',
+        //         'pay' => 'required',
+        //         'due' => 'required',
+
+        //     ]);
+
+
+
         $data = array();
         $data['customer'] = $request->customer;
         $data['tanggal_order'] = $request->tanggal_order;
@@ -30,7 +44,7 @@ class OrderController extends Controller
         $data['total'] = $request->total;
         $data['payment_status'] = $request->payment_status;
         $data['pay'] = $request->pay;
-        $data['due'] = $request->vat;
+        $data['due'] = $request->due;
 
         $order_id = Order::insertGetId($data);
         $contents = Cart::content();
@@ -70,33 +84,64 @@ class OrderController extends Controller
 
     public function OrderStatusUpdate(Request $request)
     {
-
         $order_id = $request->id;
 
-        $product = OrderDetails::where('order_id', $order_id)->get();
-        foreach ($product as $item) {
+
+        $products = OrderDetails::where('order_id', $order_id)->get();
+
+
+        $order = Order::findOrFail($order_id);
+        $order_date = $order->tanggal_order;
+        foreach ($products as $item) {
             Product::where('id', $item->product_id)
-                ->update(['product_store' => DB::raw('product_store-' . $item->quantity)]);
+                ->update(['product_store' => DB::raw('product_store - ' . $item->quantity)]);
+
+
+            $stok = new Stok();
+            $stok->product_id = $item->product_id;
+            $stok->stok_keluar = $item->quantity;
+            $stok->tanggal = $order_date;
+            $stok->save();
         }
 
-
-        $order =  Order::findOrFail($order_id);
-
+       
         $order->order_status = 'completed';
-
         $order->save();
-
 
         notyf()->success("Order Done Successfully!");
 
-        return to_route('admin.pending.order');
+        return to_route('admin.pos');
     }
+
 
 
 
     public function CompleteOrder(): View
     {
-        $orders = Order::where('order_status', 'completed')->paginate(10);
+        $orders = Order::where('order_status', 'completed')->orderBy('id', 'desc')->paginate(10);
         return view('admin.order.complete_order', compact('orders'));
+    }
+
+
+
+
+    public function PdfInvoice($order_id)
+    {
+        $orders = Order::where('id', $order_id)->first();
+        $store = Store::first();
+        $orderItems = OrderDetails::with('product')->where('order_id', $order_id)->orderBy('id', 'DESC')->get();
+        $pdf = Pdf::loadView('admin.order.pdf_invoice', compact('orders', 'orderItems', 'store'))->setPaper('a4')->setOption([
+            'tempDir' => public_path(),
+            'chroot' => public_path(),
+
+        ]);
+
+        return $pdf->download('invoice.pdf');
+    }
+
+
+    public function exportComplete()
+    {
+        return Excel::download(new OrderCompleteExport, 'orders_completed.xlsx');
     }
 }

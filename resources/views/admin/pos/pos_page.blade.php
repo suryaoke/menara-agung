@@ -44,17 +44,22 @@
                                     </thead>
                                     @php
                                         $allcarts = Cart::content();
+
                                     @endphp
                                     <tbody>
                                         @foreach ($allcarts as $allcart)
+                                            @php
+                                                $productDetail = App\Models\Product::where('id', $allcart->id)->first();
+                                            @endphp
                                             <tr class="text-center">
                                                 <td> {{ $allcart->name }} </td>
-                                                <td>
+                                                <td style="width: 100px;">
                                                     <form action="{{ route('admin.update.pos.cart', $allcart->rowId) }}"
                                                         method="POST" enctype="multipart/form-data">
                                                         @csrf
                                                         <input type="number" name="qty" value="{{ $allcart->qty }}"
-                                                            style="width: 40px" min="1" id="">
+                                                            style="width: 40px" min="1"
+                                                            max="{{ $productDetail->product_store }}" id="">
                                                         <button type="submit" class="btn btn-sm btn-success"
                                                             style="margin-top: -2px">
                                                             <i class="ti ti-check"></i>

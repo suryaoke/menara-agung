@@ -30,7 +30,7 @@
                                     <th>Image</th>
                                     <th>Name</th>
                                     <th>Category</th>
-                                    <th>Product</th>
+                                    <th>Supplier</th>
                                     <th>Code</th>
                                     <th>Tanggal</th>
                                     <th>Jual</th>

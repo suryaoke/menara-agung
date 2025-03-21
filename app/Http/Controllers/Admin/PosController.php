@@ -14,25 +14,56 @@ class PosController extends Controller
 {
     public function index(): View
     {
-        $products = Product::paginate(10);
+        $products = Product::where('product_store', '>', '0')->paginate(10);
         return view('admin.pos.pos_page', compact('products'));
     }
 
     public function AddCart(Request $request)
     {
-        Cart::add([
-            'id' => $request->id,
-            'name' => $request->name,
-            'qty' => $request->qty,
-            'price' => $request->price,
-            'weight' => 550,
-            'options' => ['size' => 'large'],
-        ]);
+        $product = Product::find($request->id);
 
-        notyf()->success("Product Added Successfully!");
+
+        if (!$product) {
+            notyf()->warning("Produk Tidak Ada");
+            return redirect()->back();
+        }
+
+        $allcarts = Cart::content();
+        $existingCartItem = $allcarts->where('id', $product->id)->first();
+
+        if ($existingCartItem) {
+
+            $newQty = $existingCartItem->qty + $request->qty;
+
+
+            if ($newQty > $product->product_store) {
+                notyf()->warning("Stock Kosong!");
+                return redirect()->back();
+            }
+
+            Cart::update($existingCartItem->rowId, ['qty' => $newQty]);
+        } else {
+
+            if ($request->qty > $product->product_store) {
+                notyf()->warning("Stock Kosong!");
+                return redirect()->back();
+            }
+
+            Cart::add([
+                'id' => $product->id,
+                'name' => $product->name,
+                'qty' => $request->qty,
+                'price' => $request->price,
+                'weight' => 550, // Jika ada parameter berat
+                'options' => ['size' => 'large'], // Jika ada pilihan lain
+            ]);
+        }
+
+        notyf()->success("Produk berhasil ditambahkan ke keranjang!");
 
         return to_route('admin.pos');
     }
+
 
     public function AllItem(): View
     {
@@ -68,14 +99,22 @@ class PosController extends Controller
 
     public function AddInvoice(Request $request)
     {
+
         $request->validate([
             'customer' => 'required',
         ]);
+
+
+        if (Cart::count() == 0) {
+            return redirect()->back()->with('error', 'Keranjang tidak boleh kosong.');
+        }
+
+
         $contents = Cart::content();
         $customer = $request->customer;
         $store = Store::first();
 
-
+      
         return view('admin.invoice.product_invoice', compact('store', 'contents', 'customer'));
     }
 }

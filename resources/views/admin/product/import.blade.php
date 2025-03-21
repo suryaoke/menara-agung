@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Import Products</h3>
                     <div class="card-actions">
-                        <a href="{{ route('admin.export.product') }}" class="btn btn-success">
+                        <a href="{{ route('admin.export.template.product') }}" class="btn btn-success">
                             Download Xlsx
                         </a>
 

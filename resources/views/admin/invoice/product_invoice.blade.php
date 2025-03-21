@@ -37,9 +37,9 @@
 
 
                         <div class="col-6">
-                            <span class="avatar avatar-xl"
+                            {{--  <span class="avatar avatar-xl"
                                 style="background-image: url({{ $store->image ? asset($store->image) : asset('admin/assets/static/avatars/userprofile.jpg') }})">
-                            </span>
+                            </span>  --}}
                             <p class="h3 mt-1"> {{ $store->name }} </p>
                             <address>
                                 {{ $store->address }} <br>
@@ -128,21 +128,21 @@
                         <div class="mb-3">
                             <label class="form-label text-capitalize">Payment</label>
 
-                            <x-select-block name="payment_status" placeholder="Select payment" :value="old('payment_status')"
-                                :options="['cash' => 'Cash']" />
+                            <x-select-block name="payment_status" :value="old('payment_status', 'cash')" :options="['cash' => 'Cash', 'transfer' => 'Transfer']" />
+
 
                             <x-input-error :messages="$errors->get('payment_status')" class="mt-2" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Pay Now</label>
-                            <input type="number" name="pay" :value="old('pay')" class="form-control"
-                                placeholder="Pau Now" autocomplete="off" required>
+                            <input type="number" id="payNow" name="pay" value="{{ old('pay') }}"
+                                class="form-control" placeholder="Pay Now" autocomplete="off" required>
                             <x-input-error :messages="$errors->get('pay')" class="mt-2" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Due Amount</label>
-                            <input type="number" name="due" :value="old('due')" class="form-control"
-                                placeholder="Due Amont" autocomplete="off" required>
+                            <input type="number"  name="due" value="{{ old('due') }}"
+                                class="form-control" placeholder="Due Amount" autocomplete="off" required readonly>
                             <x-input-error :messages="$errors->get('due')" class="mt-2" />
                         </div>
 
@@ -172,4 +172,29 @@
             </div>
         </div>
     </div>
+
+    {{--  <script>
+        const payNowInput = document.getElementById('payNow');
+        const dueAmountInput = document.getElementById('dueAmount');
+
+
+        const cartTotalString = '{{ Cart::total() }}'.replace(/\./g, '').replace(',', '.');
+        const cartTotal = parseFloat(cartTotalString); // Convert the string to a float
+
+        // Function to update Due Amount
+        function updateDueAmount() {
+            let payNow = parseFloat(payNowInput.value) || 0; // Set Pay Now to 0 if empty
+            let dueAmount = Math.floor(cartTotal - payNow); // Calculate Due Amount and round down
+            dueAmountInput.value = dueAmount >= 0 ? dueAmount : 0; // Set Due Amount (no negative values)
+        }
+
+        // Initialize Due Amount when page loads
+        window.addEventListener('DOMContentLoaded', updateDueAmount);
+
+        // Also initialize Due Amount when modal is shown
+        document.getElementById('modal-report').addEventListener('shown.bs.modal', updateDueAmount);
+
+        // Listen for changes in the Pay Now input field
+        payNowInput.addEventListener('input', updateDueAmount);
+    </script>  --}}
 @endsection

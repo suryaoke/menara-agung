@@ -34,7 +34,7 @@ class ProductUpdateRequest extends FormRequest
             'tanggal_beli' => ['required'],
             'harga_beli' => ['required'],
             'harga_jual' => ['required'],
-            'product_store' => ['required'],
+          
             'image' => ['image', 'max:3000'],
         ];
     }

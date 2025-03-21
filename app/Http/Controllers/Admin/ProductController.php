@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\PrductTemplateExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Supplier;
+use App\Models\Stok;
 use App\Traits\FileUpload;
 use Exception;
 use Illuminate\Contracts\View\View;
@@ -26,7 +28,7 @@ class ProductController extends Controller
      */
     public function index(): View
     {
-        $products = Product::paginate(10);
+        $products = Product::orderBy('name', 'asc')->paginate(10);
         return view('admin.product.index', compact('products'));
     }
 
@@ -36,8 +38,8 @@ class ProductController extends Controller
     public function create()
     {
 
-        $supplierOptions = Supplier::pluck('name', 'id')->toArray();
-        $categoryOptions = Category::pluck('name', 'id')->toArray();
+        $supplierOptions = Supplier::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        $categoryOptions = Category::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
 
         return view('admin.product.create', compact('supplierOptions', 'categoryOptions'));
     }
@@ -62,6 +64,11 @@ class ProductController extends Controller
         $product->image = $imagePath;
         $product->save();
 
+        $stok = new Stok();
+        $stok->product_id = $product->id;
+        $stok->awal = $product->product_store;
+        $stok->save();
+
         notyf()->success("Created product Successfully!");
 
         return to_route('admin.product.index');
@@ -79,8 +86,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $supplierOptions = Supplier::pluck('name', 'id')->toArray();
-        $categoryOptions = Category::pluck('name', 'id')->toArray();
+        $supplierOptions = Supplier::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        $categoryOptions = Category::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
 
         return view('admin.product.edit', compact('product', 'supplierOptions', 'categoryOptions'));
     }
@@ -102,7 +109,7 @@ class ProductController extends Controller
         $product->tanggal_beli = $request->tanggal_beli;
         $product->harga_beli = $request->harga_beli;
         $product->harga_jual = $request->harga_jual;
-        $product->product_store = $request->product_store;
+
 
         $product->save();
 
@@ -164,5 +171,10 @@ class ProductController extends Controller
         notyf()->success("Product Import Successfully!");
 
         return to_route('admin.import.product');
+    }
+
+    public function ExportTemplateProduct()
+    {
+        return Excel::download(new PrductTemplateExport, 'template-products.xlsx');
     }
 }

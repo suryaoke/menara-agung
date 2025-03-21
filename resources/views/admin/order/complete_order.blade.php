@@ -5,8 +5,15 @@
         <div class="container-xl">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Pending Orders</h3>
+                    <h3 class="card-title">Complete Orders</h3>
+                    <div class="card-actions">
 
+                        <a href="{{ route('admin.export.complete.order') }}" class="btn btn-primary">
+
+                            Export
+                        </a>
+
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -18,7 +25,7 @@
                                     <th>Order Date</th>
                                     <th>Payment</th>
                                     <th>Invoice</th>
-                                    <th>Pay</th>
+                                    <th>Total</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -33,7 +40,7 @@
                                         <td>{{ $order->tanggal_order }}</td>
                                         <td>{{ $order->payment_status }}</td>
                                         <td>{{ $order->invoice_no }}</td>
-                                        <td>{{ $order->pay }}</td>
+                                        <td>{{ $order->total }}</td>
                                         <td>
                                             <a href="#" class="btn btn-outline-success active w-10">
                                                 {{ $order->order_status }}
@@ -42,9 +49,9 @@
                                         </td>
 
                                         <td>
-                                            <a href="{{ route('admin.order.details', $order->id) }}"
+                                            <a href="{{ route('admin.order.invoice.pdf', $order->id) }}"
                                                 class="btn btn-outline-primary active w-10">
-                                                File Pdf
+                                                Pdf Invoice
                                             </a>
 
                                         </td>

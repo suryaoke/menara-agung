@@ -95,17 +95,7 @@
 
                             </div>
 
-                            <div class="row ">
-                                <div class="col-md">
-                                    <x-input-number name="product_store" :value="$product->product_store"
-                                        placeholder="Enter product store" />
-                                </div>
-                                <div class="col-md">
-
-                                </div>
-
-                            </div>
-
+                          
 
 
 

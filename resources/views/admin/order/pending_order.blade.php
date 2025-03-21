@@ -18,7 +18,7 @@
                                     <th>Order Date</th>
                                     <th>Payment</th>
                                     <th>Invoice</th>
-                                    <th>Pay</th>
+                                    <th>Total</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -33,7 +33,7 @@
                                         <td>{{ $order->tanggal_order }}</td>
                                         <td>{{ $order->payment_status }}</td>
                                         <td>{{ $order->invoice_no }}</td>
-                                        <td>{{ $order->pay }}</td>
+                                        <td>{{ $order->total }}</td>
                                         <td>
                                             <a href="#" class="btn btn-outline-danger active w-10">
                                                 {{ $order->order_status }}
@@ -44,7 +44,7 @@
                                         <td>
                                             <a href="{{ route('admin.order.details', $order->id) }}"
                                                 class="btn btn-outline-primary active w-10">
-                                              Detail
+                                                Detail
                                             </a>
 
                                         </td>
